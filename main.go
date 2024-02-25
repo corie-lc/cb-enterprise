@@ -32,6 +32,9 @@ func controller() {
 	// PRINT ALL USER POSTS WITH INFORMATION
 	color.Magenta("3) Get User Posts/PostsInformation?")
 
+	// REMOVE POST BY IS
+	color.Magenta("4) Remove User Post?")
+
 	//fmt.Println("4) Remove User Collection?")
 
 	color.Green("Enter An Option: ")
@@ -71,7 +74,19 @@ func controller() {
 		color.Yellow("Results are Loading ...:")
 		getUserPosts(usernameInput)
 		controller()
+	} else if option == "4" {
+
+		var idInput = ""
+		color.Green("Enter A Post Id: ")
+		fmt.Scan(&idInput)
+
+		color.Yellow("Results are Loading ...:")
+		removeUserPost(idInput)
+
+		color.Blue(removeUserPost(idInput))
+		controller()
 	} else {
+
 		// FAILURE TO PROVIDE VALID OPTION
 		color.Red("Invalid Option...")
 		controller()
