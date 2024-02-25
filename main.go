@@ -7,50 +7,72 @@ import (
 )
 
 func main() {
-	fmt.Println("-------------------------------------------------------------------------------------------------------------------------------------------")
-	fmt.Println("This Application Is Verified By ENV VAR - If you don't have them assigned, please reach out to management.")
+	fmt.Println("-------------------------------------------------------------------------")
+	color.Red("This Application Is Verified By ENV VAR - If you don't have them assigned, please reach out to management.")
 	controller()
 
 }
 
 func controller() {
-	fmt.Println("-------------------------------------------------------------------------------------------------------------------------------------------")
+	fmt.Println("--------------------------------------------------------------------------")
 
 	var option = ""
 
-	fmt.Println("What Would You Like To Do? >")
-	fmt.Println("-------------------------------------------------------------------------------------------------------------------------------------------")
+	color.Magenta("What Would You Like To Do? >")
+	fmt.Println("------------------------------------------------------------------------")
 
 	//fmt.Println("0) Send A Site Wide Notification?")
-	fmt.Println("1) Search For User")
-	fmt.Println("2) Delete A User?")
-	//fmt.Println("3) Remove User Post?")
+
+	// GENERAL USER SEARCH
+	color.Magenta("1) Search For User")
+
+	// DELETE USER PERM
+	color.Magenta("2) Delete A User?")
+
+	// PRINT ALL USER POSTS WITH INFORMATION
+	color.Magenta("3) Get User Posts/PostsInformation?")
+
 	//fmt.Println("4) Remove User Collection?")
 
-	fmt.Print("Enter An Option: ")
+	color.Green("Enter An Option: ")
 
 	fmt.Scan(&option)
 
+	// GENERAL USER SEARCH
 	if option == "1" {
-		fmt.Println("---- Loading User Search --")
+		color.Yellow("---- Loading User Search --")
 
 		var usernameInput = ""
-		fmt.Print("Enter A Username: ")
+		color.Green("Enter A Username: ")
 		fmt.Scan(&usernameInput)
 
-		fmt.Println("Results are Loading ...:")
+		color.Yellow("Results are Loading ...:")
 		color.Blue(getUserInformation(usernameInput))
 		controller()
+
 	} else if option == "2" {
-		fmt.Println("---- Loading User Delete --")
+		// DELETE USER PERM
+		color.Yellow("---- Loading User Delete --")
 
 		var usernameInput = ""
-		fmt.Print("Enter A Username to DELETE FOREVER: ")
+		color.Green("Enter A Username to DELETE FOREVER: ")
 		fmt.Scan(&usernameInput)
 
 		color.Blue(removeUser(usernameInput))
 		controller()
+	} else if option == "3" {
+		// PRINT ALL USER POSTS WITH INFORMATION
+		color.Yellow("---- Loading User Posts Search --")
+
+		var usernameInput = ""
+		color.Green("Enter A Username: ")
+		fmt.Scan(&usernameInput)
+
+		color.Yellow("Results are Loading ...:")
+		getUserPosts(usernameInput)
+		controller()
 	} else {
+		// FAILURE TO PROVIDE VALID OPTION
 		color.Red("Invalid Option...")
 		controller()
 	}

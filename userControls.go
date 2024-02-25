@@ -61,12 +61,14 @@ func removeUser(username string) string {
 		if confirm == "y" {
 			db.Query("DELETE FROM users WHERE username ='" + username + "'")
 			db.Query("DELETE FROM posts WHERE username ='" + username + "'")
+			db.Close()
 			return "User: " + username + " Has Been Deleted"
 		} else {
+			db.Close()
 			return "ACTION: CANCELLED"
 		}
 	}
-
+	db.Close()
 	return "User Not Found"
 
 }
