@@ -40,6 +40,33 @@ func getUserInformation(username string) string {
 	userList[4] = "Not Found!"
 	userList[5] = "Not Found!"
 
+	db.Close()
+
 	return fmt.Sprint(userList)
+
+}
+
+func removeUser(username string) string {
+	var db = getDatabaseItem()
+
+	var confirm = ""
+
+	fmt.Print("Are You Sure You Want To Delete User " + username + "(y/n): ")
+
+	fmt.Scan(&confirm)
+
+	var rows, _ = db.Query("select * from users where username = '" + username + "'")
+
+	for rows.Next() {
+		if confirm == "y" {
+			db.Query("DELETE FROM users WHERE username ='" + username + "'")
+			db.Query("DELETE FROM posts WHERE username ='" + username + "'")
+			return "User: " + username + " Has Been Deleted"
+		} else {
+			return "ACTION: CANCELLED"
+		}
+	}
+
+	return "User Not Found"
 
 }

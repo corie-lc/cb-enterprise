@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/fatih/color"
 )
 
@@ -22,7 +23,7 @@ func controller() {
 
 	//fmt.Println("0) Send A Site Wide Notification?")
 	fmt.Println("1) Search For User")
-	//fmt.Println("2) Delete A User?")
+	fmt.Println("2) Delete A User?")
 	//fmt.Println("3) Remove User Post?")
 	//fmt.Println("4) Remove User Collection?")
 
@@ -39,6 +40,15 @@ func controller() {
 
 		fmt.Println("Results are Loading ...:")
 		color.Blue(getUserInformation(usernameInput))
+		controller()
+	} else if option == "2" {
+		fmt.Println("---- Loading User Delete --")
+
+		var usernameInput = ""
+		fmt.Print("Enter A Username to DELETE FOREVER: ")
+		fmt.Scan(&usernameInput)
+
+		color.Blue(removeUser(usernameInput))
 		controller()
 	} else {
 		color.Red("Invalid Option...")
