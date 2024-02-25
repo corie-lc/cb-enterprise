@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/fatih/color"
 )
@@ -34,6 +35,15 @@ func controller() {
 
 	// REMOVE POST BY IS
 	color.Magenta("4) Remove User Post?")
+
+	// CHANGE USER TEIR LEVEL
+	color.Magenta("5) Change User Tier Level?")
+
+	// GET USER MEMBERSHIP INFORMATION
+	color.Magenta("6) Get User Tier Table?")
+
+	// CHANGE USER AUTO PRICE COUNT INFORMATION
+	color.Magenta("7) Change User Auto Price Count?")
 
 	//fmt.Println("4) Remove User Collection?")
 
@@ -84,6 +94,44 @@ func controller() {
 		removeUserPost(idInput)
 
 		color.Blue(removeUserPost(idInput))
+		controller()
+	} else if option == "5" {
+		var usernameInput = ""
+		var levelInput = -1
+
+		color.Green("Enter A Username: ")
+		fmt.Scan(&usernameInput)
+
+		color.Cyan("Enter 0 for free, 1 for essentails or 2 for plus.")
+
+		color.Green("Enter A Level : ")
+		fmt.Scan(&levelInput)
+
+		color.Yellow("Results are Loading ...:")
+		color.Blue(changeUserTierLevel(usernameInput, levelInput))
+		controller()
+	} else if option == "6" {
+		var usernameInput = ""
+
+		color.Green("Enter A Username: ")
+		fmt.Scan(&usernameInput)
+
+		color.Blue(getUserTierTable(usernameInput))
+
+		controller()
+
+	} else if option == "7" {
+		var usernameInput = ""
+		var count = -1
+
+		color.Green("Enter A Username: ")
+		fmt.Scan(&usernameInput)
+
+		color.Green("Enter A New Count(NUMBER) : ")
+		fmt.Scan(&count)
+
+		color.Yellow("Results are Loading ...:")
+		color.Blue(changeUserAutoPriceCount(usernameInput, strconv.Itoa(count)))
 		controller()
 	} else {
 

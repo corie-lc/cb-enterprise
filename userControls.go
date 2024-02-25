@@ -72,3 +72,83 @@ func removeUser(username string) string {
 	return "User Not Found"
 
 }
+
+func changeUserTierLevel(username string, level int) string {
+	var db = getDatabaseItem()
+
+	var rows, _ = db.Query("select * from users where username = '" + username + "'")
+	var levelString = ""
+
+	if level == 0 {
+		levelString = "free"
+	} else if level == 1 {
+		levelString = "essentails"
+	} else if level == 2 {
+		levelString = "plus"
+	} else {
+		return "Invalid Input: Enter 0 for free, 1 for essentails or 2 for plus."
+	}
+
+	for rows.Next() {
+		db.Query("UPDATE membership_services SET tier = '" + levelString + "' WHERE username = '" + username + "';")
+		db.Close()
+		return "User: " + username + " has changed tiers -> " + levelString + "."
+
+	}
+	db.Close()
+	return "No User Found"
+
+}
+
+func changeUserAutoPriceCount(username string, count string) string {
+	var db = getDatabaseItem()
+
+	var rows, _ = db.Query("select * from users where username = '" + username + "'")
+
+	for rows.Next() {
+		db.Query("UPDATE membership_services SET autoprice_count = '" + count + "' WHERE username = '" + username + "';")
+		db.Close()
+		return "User: " + username + " has updated autoprice_count -> " + count + "."
+
+	}
+	db.Close()
+	return "No User Found"
+
+}
+
+func getUserTierTable(username string) string {
+
+	var (
+		usernameSQL string
+		email       string
+		tier        string
+		auto_count  string
+	)
+
+	var db = getDatabaseItem()
+	var rows, _ = db.Query("select * from membership_services where username = '" + username + "'")
+
+	var userList [4]string
+
+	for rows.Next() {
+		rows.Scan(&usernameSQL, &email, &tier, &auto_count)
+
+		userList[0] = usernameSQL
+		userList[1] = email
+		userList[2] = tier
+		userList[3] = auto_count
+
+		db.Close()
+		return fmt.Sprint(userList)
+	}
+
+	userList[0] = "Not Found!"
+	userList[1] = "Not Found!"
+	userList[2] = "Not Found!"
+	userList[3] = "Not Found!"
+
+	db.Close()
+
+	return fmt.Sprint(userList)
+
+}
